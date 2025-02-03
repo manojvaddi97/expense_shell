@@ -33,19 +33,19 @@ then
     dnf install mysql-server -y &>>$LOGFILE_NAME
     VALIDATE $? "MYSQL Server Installation"
 else
-    echo "MYSQL Server Installtion already exists"
+    echo -e "MYSQL Server Installtion $Y already exists $N"
 fi
 systemctl enable mysqld
 VALIDATE $? "MYSQL Server enabling"
 systemctl start mysqld
 VALIDATE $? "MYSQL Server Starting"
-mysql_secure_installation --set-root-pass ExpenseApp@1 -e show databases;
+mysql -h mysqldb.manojvaddi.online -u root -p ExpenseApp@1 -e 'show databases;'
 if [ $? -ne 0 ]
 then
     mysql_secure_installation --set-root-pass ExpenseApp@1
     VALIDATE $? "Root Password setting"
 else
-    echo "ROOT Password is already set"
+    echo "ROOT Password is $Y already set $N"
 fi
 
 
