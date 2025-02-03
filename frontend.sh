@@ -28,38 +28,38 @@ VALIDATE(){
     fi
 }
 
-dnf list installed nginx
+dnf list installed nginx &&>>$LOGFILE_NAME
 if [ $? -ne 0 ]
 then
-    dnf install nginx -y
+    dnf install nginx -y &&>>$LOGFILE_NAME
     VALIDATE $? "Nginx Installation"
 else
     echo -e "NGINX Installation $Y already exists $N"
 fi
 
-systemctl enable nginx
+systemctl enable nginx &&>>$LOGFILE_NAME
 VALIDATE $? "Nginx enabled"
 
-systemctl start nginx
+systemctl start nginx &&>>$LOGFILE_NAME
 VALIDATE $? "Nginx started"
 
-rm -rf /usr/share/nginx/html/*
+rm -rf /usr/share/nginx/html/* &&>>$LOGFILE_NAME
 VALIDATE $? "Removing default content"
 
-curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &&>>$LOGFILE_NAME
 VALIDATE $? "Downloading latest Content"
 
-cd /usr/share/nginx/html
+cd /usr/share/nginx/html &&>>$LOGFILE_NAME
 VALIDATE $? "changing directory"
 
-rm -rf /usr/share/nginx/html/*
+rm -rf /usr/share/nginx/html/* &&>>$LOGFILE_NAME
 VALIDATE $? "Removing old content"
 
-unzip /tmp/frontend.zip
+unzip /tmp/frontend.zip &&>>$LOGFILE_NAME
 VALIDATE $? "unzip latest content"
 
-cp /home/ec2-user/expense_shell/expense.conf /etc/nginx/default.d/expense.conf
+cp /home/ec2-user/expense_shell/expense.conf /etc/nginx/default.d/expense.conf &&>>$LOGFILE_NAME
 VALIDATE $? "copying configuration file"
 
-systemctl restart nginx
+systemctl restart nginx &&>>$LOGFILE_NAME
 VALIDATE $? "Restart Nginx server"
