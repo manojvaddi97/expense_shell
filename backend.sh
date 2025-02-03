@@ -55,6 +55,8 @@ VALIDATE $? "downloading application code"
 cd /app
 VALIDATE $? "Moving to app directory"
 
+rm -rf /app/*
+VALIDATE $? "removing files"
 unzip /tmp/backend.zip &>>$LOGFILE_NAME
 VALIDATE $? "Unzip backend code"
 
@@ -78,9 +80,11 @@ VALIDATE $? "Loading schema"
 systemctl daemon-reload &>>$LOGFILE_NAME
 VALIDATE $? "Daemon reloaded"
 
-systemctl start backend &>>$LOGFILE_NAME
-VALIDATE $? "Backend started"
-
 systemctl enable backend &>>$LOGFILE_NAME
 VALIDATE $? "Backend enabled"
+
+systemctl restart backend &>>$LOGFILE_NAME
+VALIDATE $? "Backend started"
+
+
 
