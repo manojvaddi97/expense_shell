@@ -5,6 +5,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 LOGFILE_DIR="/var/log/expense_shell"
+mkdir -p "$LOGFILE_DIR"
 LOGFILE=$(echo $0 | cut -d "." -f1)
 TIMESTAMP=$(date +%m-%d-%Y-%H-%M-%S)
 LOGFILE_NAME="$LOGFILE_DIR/$LOGFILE-$TIMESTAMP.log"
