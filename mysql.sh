@@ -39,7 +39,7 @@ systemctl enable mysqld
 VALIDATE $? "MYSQL Server enabling"
 systemctl start mysqld
 VALIDATE $? "MYSQL Server Starting"
-mysql -h mysqldb.manojvaddi.online -u root -p ExpenseApp@1 -e 'show databases;'
+mysql -h mysqldb.manojvaddi.online -u root -pExpenseApp@1 -e 'show databases;'
 if [ $? -ne 0 ]
 then
     mysql_secure_installation --set-root-pass ExpenseApp@1
